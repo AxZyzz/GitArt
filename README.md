@@ -308,6 +308,6 @@ MIT. Do whatever you want with it — just don't use it to lie about your skills
 ---
 
 ```
- A fun project by AxZyzz · a2b.services
- made with ♥ and way too many commits
+ A fun project by AxZyzz · A2B AI TECHNOLOGIES
+ made with ♥ and way too less commits
 ```
