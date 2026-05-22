@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './ScriptExporter.module.css';
-import { generateNodeScript, generateRevertScript, gridToCommitDates } from '../utils/scriptGenerator.js';
+import { generateNodeScript, gridToCommitDates } from '../utils/scriptGenerator.js';
 import ConsentModal from './ConsentModal.jsx';
 import { subscribeEmail } from '../lib/supabase.js';
 
@@ -95,16 +95,6 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDownloadRevert = () => {
-    const revert = generateRevertScript(year, repoUrl, emailToUse);
-    const blob = new Blob([revert], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `gitart-revert-${year}.mjs`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
 
   return (
     <div className={styles.wrap}>
@@ -217,9 +207,6 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
                 <button className={`${styles.actionBtn} ${styles.primary}`} onClick={handleDownload} disabled={!emailValid} title={!emailValid ? 'Enter your GitHub email above first' : ''}>
                   ↓ Download
                 </button>
-                <button className={`${styles.actionBtn} ${styles.revertBtn}`} onClick={handleDownloadRevert} title="Download a script to undo this art">
-                  ↩ Revert Script
-                </button>
               </div>
             </div>
 
@@ -259,6 +246,8 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
               <span>
                 Use a <strong>dedicated empty repo</strong> for this.
                 The script force-pushes and will overwrite any existing history.
+                <br /><br />
+                To revert the changes, simply delete that repository.
               </span>
             </div>
           </div>
