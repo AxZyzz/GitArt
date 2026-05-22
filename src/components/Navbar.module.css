@@ -1,0 +1,84 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.bracket {
+  color: var(--green-4);
+}
+
+.name {
+  color: var(--text-primary);
+  padding: 0 2px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 0.85rem;
+}
+
+.links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.links a:hover {
+  color: var(--green-4);
+  text-decoration: none;
+}
+
+.ghLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary) !important;
+  transition: border-color 0.15s, background 0.15s !important;
+}
+
+.ghLink:hover {
+  border-color: var(--green-4) !important;
+  background: var(--bg-tertiary) !important;
+  color: var(--green-4) !important;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-left: 2px;
+}

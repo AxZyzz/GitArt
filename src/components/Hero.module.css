@@ -1,0 +1,257 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  overflow: hidden;
+}
+
+.canvasWrap {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  overflow: hidden;
+}
+
+.canvas {
+  image-rendering: pixelated;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.canvasFade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, var(--bg-primary) 85%);
+}
+
+.topLeft {
+  position: absolute;
+  top: 28px;
+  left: 32px;
+  z-index: 2;
+}
+
+.topLeftBy {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.topLeftBy a {
+  color: var(--green-4);
+  text-decoration: none;
+}
+
+.topLeftBy a:hover { text-decoration: underline; }
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 720px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin-bottom: 32px;
+  letter-spacing: 0.03em;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-4);
+  box-shadow: 0 0 6px var(--green-4);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.dim {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.green {
+  color: var(--green-4);
+  text-shadow: 0 0 20px rgba(57, 211, 83, 0.4);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.terminal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.termBar {
+  background: var(--bg-tertiary);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dot1, .dot2, .dot3 {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot1 { background: #ff5f57; }
+.dot2 { background: #febc2e; }
+.dot3 { background: #28c840; }
+
+.termTitle {
+  flex: 1;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.termBody {
+  padding: 16px 20px;
+  font-size: 0.82rem;
+  line-height: 1.8;
+}
+
+.prompt {
+  color: var(--green-4);
+}
+
+.cmd {
+  color: var(--text-primary);
+}
+
+.out {
+  color: var(--text-muted);
+}
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--green-4);
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  padding: 12px 28px;
+  background: var(--green-4);
+  color: #0d1117;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 0 20px rgba(57, 211, 83, 0.25);
+}
+
+.btnPrimary:hover {
+  background: #4ae168;
+  transform: translateY(-1px);
+  box-shadow: 0 0 32px rgba(57, 211, 83, 0.4);
+}
+
+.btnSecondary {
+  padding: 12px 28px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: border-color 0.15s, background 0.15s;
+  text-decoration: none;
+}
+
+.btnSecondary:hover {
+  border-color: var(--green-4);
+  background: var(--green-glow);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.statNum {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--green-4);
+}
+
+.statLabel {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.statDivider {
+  width: 1px;
+  height: 32px;
+  background: var(--border);
+}

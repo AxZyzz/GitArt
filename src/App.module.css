@@ -1,0 +1,210 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.section {}
+
+.sectionHeader {
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.dim {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.sectionSub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: -40px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.dividerText {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.howSection {}
+
+.howGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.howCard {
+  padding: 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.15s;
+}
+
+.howCard:hover {
+  border-color: var(--green-3);
+}
+
+.howNum {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green-4);
+  opacity: 0.5;
+  line-height: 1;
+}
+
+.howTitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.howDesc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.howDesc code {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 0.72rem;
+  color: var(--green-3);
+}
+
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding: 40px 24px;
+}
+
+.footerInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.footerLogo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.footerBracket {
+  color: var(--green-4);
+}
+
+.footerSub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.footerLinks {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.footerLinks a {
+  color: var(--text-secondary);
+}
+
+.footerLinks a:hover {
+  color: var(--green-4);
+  text-decoration: none;
+}
+
+.footerDisclaimer {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 16px;
+  max-width: 520px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.footerCopy {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.footerCopy a {
+  color: var(--green-4);
+  text-decoration: none;
+}
+
+.footerCopy a:hover {
+  text-decoration: underline;
+}
+
+.footerCompany {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  max-width: 480px;
+  width: 100%;
+}
+
+.footerCompanyText {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.footerCompanyText a {
+  color: var(--green-4);
+  text-decoration: none;
+}
+
+.footerCompanyText a:hover {
+  text-decoration: underline;
+}
