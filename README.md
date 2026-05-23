@@ -295,7 +295,8 @@ Plus: **Text Generator** — type any name or phrase, rendered as pixel art usin
 Vite · React · CSS Modules · Zero backend · No auth · No tracking
 
 ```bash
-npm install && npm run dev   # localhost:5173
+git clone https://github.com/AxZyzz/GitArt.git
+npm install && npm run dev   # localhost:5173(to test,edit and run locally)
 npm run build                # production build
 ```
 
