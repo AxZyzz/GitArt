@@ -5,7 +5,7 @@ import ConsentModal from './ConsentModal.jsx';
 import { subscribeEmail } from '../lib/supabase.js';
 
 const CURRENT_YEAR = new Date().getFullYear();
-const YEARS = [CURRENT_YEAR - 2, CURRENT_YEAR - 1, CURRENT_YEAR, CURRENT_YEAR + 1];
+const YEARS = [CURRENT_YEAR - 3, CURRENT_YEAR - 2, CURRENT_YEAR - 1, CURRENT_YEAR, CURRENT_YEAR + 1];
 
 function parseGitHubUrl(url) {
   const m = url.match(/github\.com[/:]([^/]+)\/([^/.]+)/);
