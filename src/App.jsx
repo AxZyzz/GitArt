@@ -6,6 +6,8 @@ import TemplateGallery from './components/TemplateGallery.jsx';
 import ScriptExporter from './components/ScriptExporter.jsx';
 import { emptyGrid } from './data/templates.js';
 import TextGenerator from './components/TextGenerator.jsx';
+import ProfilePreview from './components/ProfilePreview.jsx';
+import { YEARS } from './lib/years.js';
 import styles from './App.module.css';
 
 export default function App() {
@@ -70,6 +72,18 @@ export default function App() {
             </p>
           </div>
           <PixelGrid grid={grid} onChange={handleGridChange} year={year} />
+        </section>
+
+        <section id="preview" className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.dim}>// </span>Profile Preview
+            </h2>
+            <p className={styles.sectionSub}>
+              How it will look on your GitHub profile. Days outside the chosen year are dropped.
+            </p>
+          </div>
+          <ProfilePreview grid={grid} year={year} years={YEARS} onYearChange={setYear} />
         </section>
 
         <section id="export" className={styles.section}>

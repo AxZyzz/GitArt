@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styles from './Hero.module.css';
 import { PALETTES, currentPalette } from '../lib/palette.js';
+import { TEMPLATES } from '../data/templates.js';
 
 const ROWS = 7;
 const COLS = 53;
@@ -133,10 +134,14 @@ export default function Hero({ onGetStarted }) {
           </a>
         </div>
 
+        <a className={styles.tutorial} href="https://youtu.be/JpHKqhPetHo" target="_blank" rel="noopener noreferrer">
+          ▶ New here? Watch the 2-min tutorial
+        </a>
+
         <div className={styles.stats}>
           <div className={styles.stat}>
-            <span className={styles.statNum}>53</span>
-            <span className={styles.statLabel}>weeks/year</span>
+            <span className={styles.statNum}>{TEMPLATES.length}</span>
+            <span className={styles.statLabel}>templates</span>
           </div>
           <div className={styles.statDivider} />
           <div className={styles.stat}>

@@ -4,8 +4,9 @@ import { generateNodeScript, gridToCommitDates } from '../utils/scriptGenerator.
 import ConsentModal from './ConsentModal.jsx';
 import { subscribeEmail } from '../lib/supabase.js';
 
-const CURRENT_YEAR = new Date().getFullYear();
-const YEARS = [CURRENT_YEAR - 3, CURRENT_YEAR - 2, CURRENT_YEAR - 1, CURRENT_YEAR, CURRENT_YEAR + 1];
+import { YEARS } from '../lib/years.js';
+
+const TUTORIAL_URL = 'https://youtu.be/JpHKqhPetHo';
 
 function parseGitHubUrl(url) {
   const m = url.match(/github\.com[/:]([^/]+)\/([^/.]+)/);
@@ -107,9 +108,19 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
         </p>
       </div>
 
+      <div className={styles.prereqs}>
+        <span className={styles.prereqTitle}>You need</span>
+        <span className={styles.prereq}>Node.js 18+</span>
+        <span className={styles.prereq}>Git</span>
+        <span className={styles.prereq}>A new, empty, public GitHub repo</span>
+        <a className={styles.tutorial} href={TUTORIAL_URL} target="_blank" rel="noopener noreferrer">
+          ▶ Watch the 2-min tutorial
+        </a>
+      </div>
+
       <div className={styles.config}>
         <div className={styles.field}>
-          <label className={styles.label}>Year</label>
+          <label className={styles.label}><span className={styles.stepNum}>1</span>Year</label>
           <div className={styles.yearTabs}>
             {YEARS.map(y => (
               <button
@@ -124,7 +135,7 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
         </div>
 
         <div className={styles.field} style={{ flex: 1 }}>
-          <label className={styles.label}>GitHub Repo URL <span className={styles.optional}>(optional)</span></label>
+          <label className={styles.label}><span className={styles.stepNum}>2</span>GitHub Repo URL <span className={styles.optional}>(optional)</span></label>
           <input
             className={styles.input}
             type="text"
@@ -136,7 +147,7 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
 
         <div className={styles.field}>
           <label className={styles.label}>
-            GitHub Email <span className={styles.optional}>(recommended)</span>
+            <span className={styles.stepNum}>3</span>GitHub Email <span className={styles.optional}>(recommended)</span>
           </label>
           <input
             className={styles.input}
@@ -185,6 +196,7 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
           <div className={styles.scriptBox}>
             <div className={styles.scriptHeader}>
               <div className={styles.scriptMeta}>
+                <span className={styles.stepNum}>4</span>
                 <span className={styles.scriptFilename}>
                   gitart-{year}.mjs
                 </span>
@@ -210,15 +222,16 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
 
           <div className={styles.instructions}>
             <h3 className={styles.stepsTitle}>
-              <span className={styles.dim}>$</span> how to use
+              <span className={styles.stepNum}>5</span>
+              <span className={styles.dim}>$</span> run it
             </h3>
             <ol className={styles.steps}>
               <li>
-                Create a <strong>new empty repo</strong> on GitHub.
+                Create a <strong>new empty public repo</strong> on GitHub.
                 Do not initialize it with a README.
               </li>
               <li>
-                Optionally add your <strong>GitHub email</strong> and repo URL above, then download the script.
+                Open a terminal in the folder where you saved the script.
               </li>
               <li>
                 Run:{' '}

@@ -407,3 +407,63 @@
   border: 1px solid rgba(248, 81, 73, 0.2);
   border-radius: 6px;
 }
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border-radius: 50%;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: #0d1117;
+  background: var(--lvl-4);
+  vertical-align: middle;
+}
+
+.scriptMeta .stepNum {
+  margin-right: -4px;
+}
+
+.prereqs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.prereqTitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+
+.prereq {
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-secondary);
+}
+
+.tutorial {
+  margin-left: auto;
+  color: var(--lvl-4);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tutorial:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .tutorial { margin-left: 0; flex-basis: 100%; }
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './TemplateGallery.module.css';
-import { TEMPLATES, COLS } from '../data/templates.js';
+import { TEMPLATES, TEMPLATE_CATEGORIES, COLS } from '../data/templates.js';
 import { LEVEL_VARS as COLORS } from '../lib/palette.js';
 
 const CELL = 6;
@@ -11,8 +11,10 @@ function MiniGrid({ grid }) {
     <div
       className={styles.miniGrid}
       style={{
-        gridTemplateColumns: `repeat(${COLS}, ${CELL}px)`,
-        gridTemplateRows: `repeat(7, ${CELL}px)`,
+        // Cells shrink on narrow cards so the whole year (incl. December) stays visible.
+        gridTemplateColumns: `repeat(${COLS}, minmax(0, ${CELL}px))`,
+        width: '100%',
+        maxWidth: COLS * CELL + (COLS - 1) * GAP,
         gap: `${GAP}px`,
       }}
     >
@@ -21,8 +23,7 @@ function MiniGrid({ grid }) {
           <div
             key={`${r}-${c}`}
             style={{
-              width: CELL,
-              height: CELL,
+              aspectRatio: '1',
               borderRadius: '1px',
               background: COLORS[val],
             }}
@@ -35,6 +36,17 @@ function MiniGrid({ grid }) {
 
 export default function TemplateGallery({ onSelect, activeId }) {
   const [hovered, setHovered] = useState(null);
+  const [filter, setFilter] = useState('All');
+
+  const filters = [
+    { key: 'All', count: TEMPLATES.length },
+    { key: 'New', count: TEMPLATES.filter(t => t.isNew).length },
+    ...TEMPLATE_CATEGORIES.map(key => ({ key, count: TEMPLATES.filter(t => t.category === key).length })),
+  ].filter(f => f.count > 0);
+
+  const visible = TEMPLATES.filter(t =>
+    filter === 'All' ? true : filter === 'New' ? t.isNew : t.category === filter
+  );
 
   return (
     <div className={styles.wrap}>
@@ -45,8 +57,23 @@ export default function TemplateGallery({ onSelect, activeId }) {
         <p className={styles.sub}>Click any template to load it into the editor.</p>
       </div>
 
+      <div className={styles.filters} role="tablist" aria-label="Template categories">
+        {filters.map(f => (
+          <button
+            key={f.key}
+            role="tab"
+            aria-selected={filter === f.key}
+            className={`${styles.filterBtn} ${filter === f.key ? styles.filterActive : ''}`}
+            onClick={() => setFilter(f.key)}
+          >
+            {f.key}
+            <span className={styles.filterCount}>{f.count}</span>
+          </button>
+        ))}
+      </div>
+
       <div className={styles.grid}>
-        {TEMPLATES.map(t => (
+        {visible.map(t => (
           <button
             key={t.id}
             className={`${styles.card} ${activeId === t.id ? styles.active : ''}`}

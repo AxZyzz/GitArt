@@ -122,3 +122,43 @@
   border: 1px solid rgb(var(--accent-rgb) / 0.35);
   border-radius: 20px;
 }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: -8px;
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.filterBtn:hover {
+  border-color: var(--lvl-3);
+  color: var(--text-primary);
+}
+
+.filterActive {
+  color: var(--lvl-4);
+  border-color: var(--lvl-4);
+  background: rgb(var(--accent-rgb) / 0.08);
+}
+
+.filterCount {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.filterActive .filterCount {
+  color: var(--lvl-3);
+}

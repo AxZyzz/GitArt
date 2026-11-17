@@ -874,4 +874,15 @@ export const TEMPLATES = [
   },
 ];
 
+// Gallery filter categories. Anything not listed falls back to 'Icons'.
+export const TEMPLATE_CATEGORIES = ['Seasonal', 'Text', 'Icons', 'Scenes', 'Patterns'];
+const CATEGORY_BY_ID = {
+  xmas: 'Seasonal', pumpkin: 'Seasonal', diya: 'Seasonal',
+  hireme: 'Text', lgtm: 'Text', 404: 'Text', shipit: 'Text', hi: 'Text', code: 'Text',
+  growth: 'Scenes', moon: 'Scenes', skyline: 'Scenes', sunrise: 'Scenes', mountains: 'Scenes', paws: 'Scenes',
+  starfield: 'Patterns', equalizer: 'Patterns', diamonds: 'Patterns', chevrons: 'Patterns', wave: 'Patterns',
+  checker: 'Patterns', stripes: 'Patterns', rain: 'Patterns', heartbeat: 'Patterns', dna: 'Patterns',
+};
+TEMPLATES.forEach(t => { t.category = CATEGORY_BY_ID[t.id] ?? 'Icons'; });
+
 export { emptyGrid, ROWS, COLS };
