@@ -26,7 +26,7 @@
 }
 
 .bracket {
-  color: var(--green-4);
+  color: var(--lvl-4);
 }
 
 .name {
@@ -48,7 +48,7 @@
 }
 
 .links a:hover {
-  color: var(--green-4);
+  color: var(--lvl-4);
   text-decoration: none;
 }
 
@@ -65,9 +65,9 @@
 }
 
 .ghLink:hover {
-  border-color: var(--green-4) !important;
+  border-color: var(--lvl-4) !important;
   background: var(--bg-tertiary) !important;
-  color: var(--green-4) !important;
+  color: var(--lvl-4) !important;
 }
 
 .stars {
@@ -81,4 +81,55 @@
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin-left: 2px;
+}
+
+.palette {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.paletteBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.paletteBtn:hover {
+  color: var(--text-primary);
+}
+
+.paletteActive {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.swatches {
+  display: flex;
+  gap: 2px;
+}
+
+.swatches span {
+  width: 7px;
+  height: 7px;
+  border-radius: 1.5px;
+}
+
+@media (max-width: 720px) {
+  .links { gap: 12px; }
+  .links > a:not(.ghLink) { display: none; }
+  .paletteLabel { display: none; }
+  .logo { font-size: 1.1rem; }
+  .ghLink { padding: 6px 10px; }
+  .stars { display: none; }
 }

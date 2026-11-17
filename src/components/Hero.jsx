@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import styles from './Hero.module.css';
+import { PALETTES, currentPalette } from '../lib/palette.js';
 
 const ROWS = 7;
 const COLS = 53;
-const COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
 
 export default function Hero({ onGetStarted }) {
   const canvasRef = useRef(null);
@@ -28,6 +28,9 @@ export default function Hero({ onGetStarted }) {
     }
 
     let tick = 0;
+    let colors = PALETTES[currentPalette()].levels;
+    const onPalette = (e) => { colors = PALETTES[e.detail].levels; };
+    window.addEventListener('gitart:palette', onPalette);
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -37,7 +40,7 @@ export default function Hero({ onGetStarted }) {
         for (let c = 0; c < COLS; c++) {
           const x = c * total;
           const y = r * total;
-          ctx.fillStyle = COLORS[grid[r][c]];
+          ctx.fillStyle = colors[grid[r][c]];
           ctx.beginPath();
           if (ctx.roundRect) {
             ctx.roundRect(x, y, cellSize, cellSize, 2);
@@ -62,7 +65,10 @@ export default function Hero({ onGetStarted }) {
     }
 
     draw();
-    return () => cancelAnimationFrame(rafRef.current);
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('gitart:palette', onPalette);
+    };
   }, []);
 
   return (

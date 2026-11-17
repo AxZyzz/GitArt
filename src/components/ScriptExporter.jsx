@@ -27,7 +27,7 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
   const emailValid = authorEmail.trim().length > 0;
   const emailToUse = emailValid ? authorEmail.trim() : '';
 
-  const script = generateNodeScript(grid, year, repoUrl, emailToUse || 'gitart@example.com');
+  const script = generateNodeScript(grid, year, repoUrl, emailToUse);
 
   const handleVerify = async () => {
     const parsed = parseGitHubUrl(repoUrl);
@@ -82,17 +82,11 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
 
   const handleDownload = () => setShowConsent(true);
 
-  const handleConsentAccept = async (email) => {
-    await subscribeEmail(email);
+  // Download always proceeds; the optional signup runs in the background.
+  const handleModalDownload = (email) => {
     setShowConsent(false);
     triggerDownload();
-  };
-
-  const handleConsentDecline = async () => {
-    setShowConsent(false);
-    await navigator.clipboard.writeText(script);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (email) subscribeEmail(email).catch(err => console.warn('GitArt: signup failed', err));
   };
 
 
@@ -100,10 +94,8 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
     <div className={styles.wrap}>
       {showConsent && (
         <ConsentModal
-          onAccept={handleConsentAccept}
-          onDecline={handleConsentDecline}
+          onDownload={handleModalDownload}
           onClose={() => setShowConsent(false)}
-          defaultEmail={authorEmail.trim() || ''}
         />
       )}
       <div className={styles.header}>
@@ -144,10 +136,10 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
 
         <div className={styles.field}>
           <label className={styles.label}>
-            GitHub Email <span className={styles.required}>required</span>
+            GitHub Email <span className={styles.optional}>(recommended)</span>
           </label>
           <input
-            className={`${styles.input} ${!authorEmail.trim() ? styles.inputWarn : ''}`}
+            className={styles.input}
             type="email"
             placeholder="your-github@email.com"
             value={authorEmail}
@@ -158,9 +150,10 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
 
       {!authorEmail.trim() && (
         <div className={styles.emailNotice}>
-          <span>⚠</span>
+          <span>ℹ</span>
           <span>
-            Set your GitHub account email above — commits must use your verified GitHub email to count as contributions.
+            No email? The script will use your local <code>git config user.email</code>. It must match a verified
+            email on your GitHub account for commits to count.
             <a href="https://github.com/settings/emails" target="_blank" rel="noopener noreferrer"> Check your emails →</a>
           </span>
         </div>
@@ -204,7 +197,7 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
                 <button className={styles.actionBtn} onClick={handleCopy}>
                   {copied ? '✓ Copied!' : 'Copy'}
                 </button>
-                <button className={`${styles.actionBtn} ${styles.primary}`} onClick={handleDownload} disabled={!emailValid} title={!emailValid ? 'Enter your GitHub email above first' : ''}>
+                <button className={`${styles.actionBtn} ${styles.primary}`} onClick={handleDownload}>
                   ↓ Download
                 </button>
               </div>
@@ -225,7 +218,7 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
                 Do not initialize it with a README.
               </li>
               <li>
-                Fill in your <strong>GitHub email</strong> above and the repo URL, then download the script.
+                Optionally add your <strong>GitHub email</strong> and repo URL above, then download the script.
               </li>
               <li>
                 Run:{' '}
@@ -273,7 +266,7 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
                   <CheckRow ok={verifyResult.isPublic} label="Repo is public" detail={!verifyResult.isPublic ? 'contributions only count on public repos' : ''} />
                   <CheckRow ok={verifyResult.defaultBranch === 'main'} label="Default branch is main" detail={verifyResult.defaultBranch} />
                   <CheckRow ok={verifyResult.commitsVisible} label="Commits visible via API" />
-                  <CheckRow ok={verifyResult.emailMatch} label="Author email matches" detail={verifyResult.latestEmail || 'no commits yet'} />
+                  {emailToUse && <CheckRow ok={verifyResult.emailMatch} label="Author email matches" detail={verifyResult.latestEmail || 'no commits yet'} />}
                   {verifyResult.repoUrl && (
                     <div className={styles.verifyLinks}>
                       <a href={verifyResult.repoUrl} target="_blank" rel="noopener noreferrer">View repo →</a>

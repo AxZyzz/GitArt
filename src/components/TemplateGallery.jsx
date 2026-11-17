@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styles from './TemplateGallery.module.css';
 import { TEMPLATES, COLS } from '../data/templates.js';
+import { LEVEL_VARS as COLORS } from '../lib/palette.js';
 
 const CELL = 6;
 const GAP = 2;
-const COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
 
 function MiniGrid({ grid }) {
   return (
@@ -68,6 +68,7 @@ export default function TemplateGallery({ onSelect, activeId }) {
               <div className={styles.name}>
                 <span className={styles.emoji}>{t.emoji}</span>
                 {t.name}
+                {t.isNew && <span className={styles.newTag}>new</span>}
               </div>
               <div className={styles.desc}>{t.description}</div>
             </div>

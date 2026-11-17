@@ -15,13 +15,28 @@
   --text-muted: #6e7681;
   --accent-blue: #58a6ff;
   --accent-blue-dim: #1f6feb;
-  --green-0: #161b22;
-  --green-1: #0e4429;
-  --green-2: #006d32;
-  --green-3: #26a641;
-  --green-4: #39d353;
-  --green-glow: rgba(57, 211, 83, 0.15);
   --font: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Contribution palette — yellow is the default. lvl-0..4 mirror the
+     five GitHub contribution levels; accent-* drive buttons, links, glows. */
+  --lvl-0: #161b22;
+  --lvl-1: #5c3d00;
+  --lvl-2: #9e6a03;
+  --lvl-3: #d29922;
+  --lvl-4: #f2cc60;
+  --accent-rgb: 242 204 96;
+  --accent-hover: #f8e3a1;
+  --accent-glow: rgb(var(--accent-rgb) / 0.15);
+}
+
+:root[data-palette="green"] {
+  --lvl-0: #161b22;
+  --lvl-1: #0e4429;
+  --lvl-2: #006d32;
+  --lvl-3: #26a641;
+  --lvl-4: #39d353;
+  --accent-rgb: 57 211 83;
+  --accent-hover: #4ae168;
 }
 
 html {

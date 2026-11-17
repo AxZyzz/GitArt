@@ -24,7 +24,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
   gap: 16px;
 }
 
@@ -40,14 +40,14 @@
 }
 
 .card:hover {
-  border-color: var(--green-3);
+  border-color: var(--lvl-3);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .card.active {
-  border-color: var(--green-4);
-  box-shadow: 0 0 0 1px var(--green-4), 0 8px 24px rgba(57, 211, 83, 0.1);
+  border-color: var(--lvl-4);
+  box-shadow: 0 0 0 1px var(--lvl-4), 0 8px 24px rgb(var(--accent-rgb) / 0.1);
 }
 
 .preview {
@@ -76,7 +76,7 @@
 
 .useBtn {
   padding: 8px 20px;
-  background: var(--green-4);
+  background: var(--lvl-4);
   color: #0d1117;
   border-radius: 6px;
   font-size: 0.82rem;
@@ -108,4 +108,17 @@
   font-size: 0.78rem;
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+.newTag {
+  margin-left: auto;
+  padding: 1px 7px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lvl-4);
+  background: rgb(var(--accent-rgb) / 0.12);
+  border: 1px solid rgb(var(--accent-rgb) / 0.35);
+  border-radius: 20px;
 }

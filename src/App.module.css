@@ -80,13 +80,13 @@
 }
 
 .howCard:hover {
-  border-color: var(--green-3);
+  border-color: var(--lvl-3);
 }
 
 .howNum {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--green-4);
+  color: var(--lvl-4);
   opacity: 0.5;
   line-height: 1;
 }
@@ -109,7 +109,7 @@
   border-radius: 3px;
   padding: 1px 5px;
   font-size: 0.72rem;
-  color: var(--green-3);
+  color: var(--lvl-3);
 }
 
 .footer {
@@ -135,7 +135,7 @@
 }
 
 .footerBracket {
-  color: var(--green-4);
+  color: var(--lvl-4);
 }
 
 .footerSub {
@@ -157,7 +157,7 @@
 }
 
 .footerLinks a:hover {
-  color: var(--green-4);
+  color: var(--lvl-4);
   text-decoration: none;
 }
 
@@ -178,7 +178,7 @@
 }
 
 .footerCopy a {
-  color: var(--green-4);
+  color: var(--lvl-4);
   text-decoration: none;
 }
 
@@ -201,7 +201,7 @@
 }
 
 .footerCompanyText a {
-  color: var(--green-4);
+  color: var(--lvl-4);
   text-decoration: none;
 }
 

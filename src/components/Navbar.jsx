@@ -1,5 +1,29 @@
 import { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
+import { PALETTES, applyPalette, currentPalette } from '../lib/palette.js';
+
+function PaletteSwitch() {
+  const [active, setActive] = useState(currentPalette);
+  return (
+    <div className={styles.palette} role="radiogroup" aria-label="Graph colour">
+      {Object.entries(PALETTES).map(([key, p]) => (
+        <button
+          key={key}
+          role="radio"
+          aria-checked={active === key}
+          className={`${styles.paletteBtn} ${active === key ? styles.paletteActive : ''}`}
+          onClick={() => setActive(applyPalette(key))}
+          title={`${p.label} graph colours`}
+        >
+          <span className={styles.swatches}>
+            {p.levels.slice(1).map(c => <span key={c} style={{ background: c }} />)}
+          </span>
+          <span className={styles.paletteLabel}>{p.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
 
 const REPO = 'AxZyzz/GitArt';
 const REPO_URL = `https://github.com/${REPO}`;
@@ -28,6 +52,7 @@ export default function Navbar() {
           <a href="#editor">Editor</a>
           <a href="#templates">Templates</a>
           <a href="#export">Export</a>
+          <PaletteSwitch />
           <a
             href={REPO_URL}
             target="_blank"

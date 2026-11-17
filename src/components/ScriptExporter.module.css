@@ -68,14 +68,14 @@
 }
 
 .yearTab:hover {
-  border-color: var(--green-3);
+  border-color: var(--lvl-3);
   color: var(--text-primary);
 }
 
 .yearTab.active {
-  background: var(--green-1);
-  border-color: var(--green-4);
-  color: var(--green-4);
+  background: var(--lvl-1);
+  border-color: var(--lvl-4);
+  color: var(--lvl-4);
 }
 
 .input {
@@ -91,7 +91,7 @@
 
 .input:focus {
   outline: none;
-  border-color: var(--green-3);
+  border-color: var(--lvl-3);
 }
 
 .input::placeholder {
@@ -117,7 +117,7 @@
 .summaryVal {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--green-4);
+  color: var(--lvl-4);
 }
 
 .summaryLabel {
@@ -166,7 +166,7 @@
 
 .scriptFilename {
   font-size: 0.85rem;
-  color: var(--green-4);
+  color: var(--lvl-4);
   font-weight: 600;
 }
 
@@ -191,19 +191,19 @@
 }
 
 .actionBtn:hover {
-  border-color: var(--green-3);
+  border-color: var(--lvl-3);
   color: var(--text-primary);
 }
 
 .actionBtn.primary {
-  background: var(--green-4);
-  border-color: var(--green-4);
+  background: var(--lvl-4);
+  border-color: var(--lvl-4);
   color: #0d1117;
   font-weight: 700;
 }
 
 .actionBtn.primary:hover {
-  background: #4ae168;
+  background: var(--accent-hover);
 }
 
 .actionBtn.revertBtn {
@@ -271,7 +271,7 @@
   align-items: center;
   justify-content: center;
   font-size: 0.72rem;
-  color: var(--green-4);
+  color: var(--lvl-4);
   font-weight: 700;
   flex-shrink: 0;
   margin-top: 1px;
@@ -287,7 +287,7 @@
   border-radius: 4px;
   padding: 2px 6px;
   font-size: 0.78rem;
-  color: var(--green-3);
+  color: var(--lvl-3);
   word-break: break-all;
 }
 
@@ -328,16 +328,21 @@
   gap: 10px;
   align-items: flex-start;
   padding: 12px 16px;
-  background: rgba(227, 121, 74, 0.08);
-  border: 1px solid rgba(227, 121, 74, 0.3);
+  background: rgba(88, 166, 255, 0.06);
+  border: 1px solid rgba(88, 166, 255, 0.25);
   border-radius: 8px;
   font-size: 0.82rem;
   color: var(--text-secondary);
 }
 
 .emailNotice span:first-child {
-  color: #e3794a;
+  color: var(--accent-blue);
   flex-shrink: 0;
+}
+
+.emailNotice code {
+  color: var(--text-primary);
+  font-size: 0.78rem;
 }
 
 .emailNotice a {

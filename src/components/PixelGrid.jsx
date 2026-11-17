@@ -2,8 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import styles from './PixelGrid.module.css';
 import { emptyGrid, ROWS, COLS } from '../data/templates.js';
 import { INTENSITY_TO_COMMITS } from '../utils/scriptGenerator.js';
-
-const COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
+import { LEVEL_VARS as COLORS } from '../lib/palette.js';
 const LABELS = ['None', 'Light', 'Medium', 'Dark', 'Max'];
 const CELL = 13;
 const GAP = 3;

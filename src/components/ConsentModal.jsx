@@ -1,77 +1,50 @@
 import { useState } from 'react';
 import styles from './ConsentModal.module.css';
 
-export default function ConsentModal({ onAccept, onDecline, onClose, defaultEmail = '' }) {
+// Shown on Download. Email is entirely optional — both buttons download.
+export default function ConsentModal({ onDownload, onClose, defaultEmail = '' }) {
   const [email, setEmail] = useState(defaultEmail);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
   const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
-  const handleAccept = async () => {
-    if (!valid) { setError('Enter a valid email.'); return; }
-    setLoading(true);
-    setError('');
-    try {
-      await onAccept(email.trim());
-    } catch (e) {
-      setError(e.message || 'Failed to save. Try again.');
-      setLoading(false);
-    }
-  };
+  const subscribe = () => valid && onDownload(email.trim());
 
   return (
     <div className={styles.overlay} onClick={e => e.target === e.currentTarget && onClose()}>
-      <div className={styles.modal}>
+      <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="dl-title">
         <button className={styles.closeBtn} onClick={onClose} aria-label="Close">✕</button>
 
-        <div className={styles.icon}>📬</div>
+        <div className={styles.icon}>⬇</div>
 
-        <h2 className={styles.title}>One quick thing before you download</h2>
+        <h2 id="dl-title" className={styles.title}>Your script is ready</h2>
 
         <p className={styles.body}>
-          GitArt stores your email to send occasional updates — new templates, features, and improvements.
-          <br /><br />
-          <strong>Don't want that?</strong> No problem. You can{' '}
-          <a
-            href="https://github.com/AxZyzz/GitArt"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.link}
-          >
-            clone the repo
-          </a>
-          {' '}and run it locally, or copy the script directly from the preview above.
+          Want a note when we ship new templates and features? Drop your email below.
+          <br />
+          <strong>Totally optional</strong>. Skip it and the download starts right away.
         </p>
 
         <div className={styles.inputRow}>
           <input
-            className={`${styles.input} ${error ? styles.inputErr : ''}`}
+            className={styles.input}
             type="email"
-            placeholder="your@email.com"
+            placeholder="your@email.com (optional)"
             value={email}
-            onChange={e => { setEmail(e.target.value); setError(''); }}
-            onKeyDown={e => e.key === 'Enter' && !loading && handleAccept()}
+            onChange={e => setEmail(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && subscribe()}
             autoFocus
           />
         </div>
 
-        {error && <p className={styles.error}>{error}</p>}
-
         <p className={styles.fine}>
-          No spam. Unsubscribe anytime. Email stored securely in Supabase.
+          No spam. Unsubscribe anytime.
         </p>
 
         <div className={styles.actions}>
-          <button className={styles.declineBtn} onClick={onDecline}>
-            No thanks — copy instead
+          <button className={styles.declineBtn} onClick={() => onDownload(null)}>
+            Skip &amp; download
           </button>
-          <button
-            className={styles.acceptBtn}
-            onClick={handleAccept}
-            disabled={loading || !email}
-          >
-            {loading ? 'Saving...' : 'Accept & Download'}
+          <button className={styles.acceptBtn} onClick={subscribe} disabled={!valid}>
+            Subscribe &amp; download
           </button>
         </div>
       </div>

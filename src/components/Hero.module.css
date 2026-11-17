@@ -43,7 +43,7 @@
 }
 
 .topLeftBy a {
-  color: var(--green-4);
+  color: var(--lvl-4);
   text-decoration: none;
 }
 
@@ -73,8 +73,8 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--green-4);
-  box-shadow: 0 0 6px var(--green-4);
+  background: var(--lvl-4);
+  box-shadow: 0 0 6px var(--lvl-4);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -98,8 +98,8 @@
 }
 
 .green {
-  color: var(--green-4);
-  text-shadow: 0 0 20px rgba(57, 211, 83, 0.4);
+  color: var(--lvl-4);
+  text-shadow: 0 0 20px rgb(var(--accent-rgb) / 0.4);
 }
 
 .subtitle {
@@ -150,7 +150,7 @@
 }
 
 .prompt {
-  color: var(--green-4);
+  color: var(--lvl-4);
 }
 
 .cmd {
@@ -165,7 +165,7 @@
   display: inline-block;
   width: 8px;
   height: 14px;
-  background: var(--green-4);
+  background: var(--lvl-4);
   vertical-align: text-bottom;
   animation: blink 1s step-end infinite;
 }
@@ -185,7 +185,7 @@
 
 .btnPrimary {
   padding: 12px 28px;
-  background: var(--green-4);
+  background: var(--lvl-4);
   color: #0d1117;
   border: none;
   border-radius: 8px;
@@ -193,13 +193,13 @@
   font-weight: 700;
   letter-spacing: 0.02em;
   transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-  box-shadow: 0 0 20px rgba(57, 211, 83, 0.25);
+  box-shadow: 0 0 20px rgb(var(--accent-rgb) / 0.25);
 }
 
 .btnPrimary:hover {
-  background: #4ae168;
+  background: var(--accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 0 32px rgba(57, 211, 83, 0.4);
+  box-shadow: 0 0 32px rgb(var(--accent-rgb) / 0.4);
 }
 
 .btnSecondary {
@@ -215,8 +215,8 @@
 }
 
 .btnSecondary:hover {
-  border-color: var(--green-4);
-  background: var(--green-glow);
+  border-color: var(--lvl-4);
+  background: var(--accent-glow);
   text-decoration: none;
   color: var(--text-primary);
 }
@@ -240,7 +240,7 @@
 .statNum {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--green-4);
+  color: var(--lvl-4);
 }
 
 .statLabel {

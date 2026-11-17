@@ -72,9 +72,9 @@
 }
 
 .toolActive {
-  background: var(--green-1) !important;
-  border-color: var(--green-3) !important;
-  color: var(--green-4) !important;
+  background: var(--lvl-1) !important;
+  border-color: var(--lvl-3) !important;
+  color: var(--lvl-4) !important;
 }
 
 .stats {
@@ -87,7 +87,7 @@
 }
 
 .statVal {
-  color: var(--green-4);
+  color: var(--lvl-4);
   font-weight: 600;
 }
 

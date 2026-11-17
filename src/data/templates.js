@@ -279,7 +279,198 @@ function generateDiagonalStripes() {
   return sparseToGrid(cells);
 }
 
+// ── ASCII-art templates ──────────────────────────────────────────
+// Each string is one row (Sun → Sat). '.' = empty, '1'–'4' = intensity.
+// Art is centred horizontally unless startCol is given.
+function fromAscii(rows, startCol) {
+  const width = Math.max(...rows.map(r => r.length));
+  const col0 = startCol ?? Math.floor((COLS - width) / 2);
+  const cells = [];
+  rows.forEach((line, r) => {
+    [...line].forEach((ch, dc) => {
+      const v = Number(ch);
+      if (v >= 1 && v <= 4) cells.push([r, col0 + dc, v]);
+    });
+  });
+  return sparseToGrid(cells);
+}
+
+function generateBee() {
+  return fromAscii([
+    '......33...33.......',
+    '.....3113.3113......',
+    '......33...33.......',
+    '...44114411441.11...',
+    '.4444114411441.111..',
+    '...44114411441.11...',
+    '.....1...1...1......',
+  ]);
+}
+
+function generateSmiley() {
+  return fromAscii([
+    '..4444444..',
+    '.4.......4.',
+    '4..44.44..4',
+    '4.........4',
+    '4.4.....4.4',
+    '.4.44444.4.',
+    '..4444444..',
+  ]);
+}
+
+function generateCat() {
+  return fromAscii([
+    '4.......4',
+    '44.....44',
+    '444444444',
+    '4.24.42.4',
+    '444414444',
+    '.4.444.4.',
+    '..44444..',
+  ]);
+}
+
+function generateLightning() {
+  return fromAscii([
+    '.......4444',
+    '......444..',
+    '.....444...',
+    '....4444444',
+    '......444..',
+    '.....444...',
+    '....44.....',
+  ]);
+}
+
+function generateCoffee() {
+  return fromAscii([
+    '..2..2..2.....',
+    '.2..2..2......',
+    '44444444444...',
+    '43333333334444',
+    '4333333333...4',
+    '.433333334444.',
+    '..4444444.....',
+  ]);
+}
+
+function generateSunrise() {
+  const grid = fromAscii([
+    '...........2...........',
+    '....2......2......2....',
+    '.....2...........2.....',
+    '.........44444.........',
+    '..22...444444444...22..',
+    '......44444444444......',
+    '.....3444444444443.....',
+  ]);
+  // horizon line across the whole year
+  for (let c = 0; c < COLS; c++) if (!grid[6][c]) grid[6][c] = 1;
+  return grid;
+}
+
+function generateSkyline() {
+  const grid = emptyGrid();
+  // [width, height] per building, one empty column between buildings
+  const blocks = [[3,3],[4,5],[2,2],[5,6],[3,4],[4,7],[2,3],[5,5],[3,6],[4,4],[2,2],[5,7],[3,3],[4,5]];
+  let c = 1;
+  for (const [w, h] of blocks) {
+    for (let dc = 0; dc < w && c + dc < COLS - 1; dc++) {
+      for (let r = ROWS - h; r < ROWS; r++) {
+        const lit = r > ROWS - h && r < ROWS - 1 && dc > 0 && dc < w - 1 && (r + dc + c) % 2 === 0;
+        grid[r][c + dc] = r === ROWS - h || lit ? 4 : 2;
+      }
+    }
+    c += w + 1;
+  }
+  return grid;
+}
+
+function generateChevrons() {
+  const grid = emptyGrid();
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const k = (c + Math.abs(r - 3)) % 9;
+      grid[r][c] = k < 2 ? 4 : k < 4 ? 2 : k < 5 ? 1 : 0;
+    }
+  }
+  return grid;
+}
+
 export const TEMPLATES = [
+  {
+    id: 'bee',
+    name: 'Busy Bee',
+    emoji: '🐝',
+    description: 'Striped and buzzing. Made for the yellow graph.',
+    grid: generateBee(),
+    isNew: true,
+  },
+  {
+    id: 'sunrise',
+    name: 'Sunrise',
+    emoji: '🌅',
+    description: 'A sun cresting the horizon across your year.',
+    grid: generateSunrise(),
+    isNew: true,
+  },
+  {
+    id: 'skyline',
+    name: 'Skyline',
+    emoji: '🏙',
+    description: 'City blocks with lit windows. Night-shift commits.',
+    grid: generateSkyline(),
+    isNew: true,
+  },
+  {
+    id: 'lightning',
+    name: 'Lightning',
+    emoji: '⚡',
+    description: 'One bold bolt. For your fastest shipping streak.',
+    grid: generateLightning(),
+    isNew: true,
+  },
+  {
+    id: 'shipit',
+    name: 'SHIP IT!',
+    emoji: '📦',
+    description: 'The only commit message that matters.',
+    grid: generateFromText('SHIP IT!'),
+    isNew: true,
+  },
+  {
+    id: 'smiley',
+    name: 'Smiley',
+    emoji: '🙂',
+    description: 'A friendly face for anyone visiting your profile.',
+    grid: generateSmiley(),
+    isNew: true,
+  },
+  {
+    id: 'cat',
+    name: 'Cat',
+    emoji: '🐱',
+    description: 'Pointy ears, whiskers, zero bugs (allegedly).',
+    grid: generateCat(),
+    isNew: true,
+  },
+  {
+    id: 'coffee',
+    name: 'Coffee',
+    emoji: '☕',
+    description: 'Steaming mug. Fuel for every green — or yellow — square.',
+    grid: generateCoffee(),
+    isNew: true,
+  },
+  {
+    id: 'chevrons',
+    name: 'Chevrons',
+    emoji: '»',
+    description: 'Forward-pointing arrows with a soft fade. Always moving.',
+    grid: generateChevrons(),
+    isNew: true,
+  },
   {
     id: 'heart',
     name: 'Heart',

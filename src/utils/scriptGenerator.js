@@ -145,13 +145,16 @@ function sanitizeRepoUrl(url) {
   }
 }
 
-export function generateNodeScript(grid, year, repoUrl, authorEmail = 'gitart@example.com') {
-  const safeEmail = sanitizeEmail(authorEmail);
-  const safeRepoUrl = sanitizeRepoUrl(repoUrl || '');
+const EMAIL_PLACEHOLDER = '__GITART_AUTHOR_EMAIL__';
 
-  // Use sanitized values everywhere from here on
-  authorEmail = safeEmail || 'gitart@example.com';
-  repoUrl = safeRepoUrl;
+export function generateNodeScript(grid, year, repoUrl, authorEmail = '') {
+  // Email is optional: when blank, the generated script falls back to the
+  // user's own `git config user.email` at run time.
+  const presetEmail = sanitizeEmail(authorEmail);
+  repoUrl = sanitizeRepoUrl(repoUrl || '');
+  // The fast-import stream carries a placeholder that the script swaps for the
+  // resolved email before importing (author lines aren't length-prefixed).
+  authorEmail = EMAIL_PLACEHOLDER;
 
   const schedule = gridToCommitDates(grid, year);
   const totalCommits = schedule.reduce((s, d) => s + d.count, 0);
@@ -221,7 +224,7 @@ export function generateNodeScript(grid, year, repoUrl, authorEmail = 'gitart@ex
 // GitArt — Commit Schedule (Node.js, fast-import mode)
 // Year    : ${year}
 // Commits : ${totalCommits}
-// Email   : ${authorEmail}
+// Email   : ${presetEmail || '(uses your git config user.email)'}
 // Run     : node gitart-${year}.mjs <repo-url>
 
 import { execSync, spawnSync } from 'child_process';
@@ -243,6 +246,19 @@ try {
   }
 } catch {
   console.error('❌ Invalid repo URL:', repoUrl);
+  process.exit(1);
+}
+
+// Resolve the commit author email: baked-in value, GITART_EMAIL, or git config
+const cleanEmail = (e) => (e || '').trim().replace(/[^a-zA-Z0-9@._+\\-]/g, '');
+const readGitEmail = () => {
+  const r = spawnSync('git', ['config', '--get', 'user.email'], { encoding: 'utf8' });
+  return r.status === 0 ? r.stdout : '';
+};
+const authorEmail = cleanEmail('${presetEmail}') || cleanEmail(process.env.GITART_EMAIL) || cleanEmail(readGitEmail());
+if (!authorEmail) {
+  console.error('❌ No author email found. Commits must use your GitHub email to show on your graph.');
+  console.error('   Fix: git config --global user.email "you@example.com"   (or set GITART_EMAIL)');
   process.exit(1);
 }
 
@@ -269,14 +285,14 @@ const check = (label, ok, detail = '') => {
 console.log('\\n[1/4] Setting up local repo...');
 exec('git init -q');
 try { exec('git checkout -b main'); } catch { exec('git checkout main'); }
-git('config', 'user.email', '${authorEmail}');
+git('config', 'user.email', authorEmail);
 git('config', 'user.name', 'GitArt');
 check('Repo initialized', true);
-check('Author email set', true, '${authorEmail}');
+check('Author email set', true, authorEmail);
 
 // ── Step 2: Fast-import all commits ─────────────────────────────
 console.log('\\n[2/4] Importing ${totalCommits} commits via git fast-import...');
-const stream = ${JSON.stringify(fastImportData)};
+const stream = ${JSON.stringify(fastImportData)}.split('${EMAIL_PLACEHOLDER}').join(authorEmail);
 
 const result = spawnSync('git', ['fast-import', '--quiet', '--force'], {
   input: stream,
@@ -342,7 +358,7 @@ if (!match) {
 
     if (commitsInfo.status === 200 && commitsInfo.body[0]) {
       const latestEmail = commitsInfo.body[0]?.commit?.author?.email;
-      check('Author email on commits', latestEmail === '${authorEmail}', latestEmail || 'unknown');
+      check('Author email on commits', latestEmail === authorEmail, latestEmail || 'unknown');
     }
   }
 }
