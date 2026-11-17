@@ -134,7 +134,7 @@ export default function Hero({ onGetStarted }) {
           </a>
         </div>
 
-        <a className={styles.tutorial} href="https://youtu.be/JpHKqhPetHo" target="_blank" rel="noopener noreferrer">
+        <a className={styles.tutorial} href="#tutorial">
           ▶ New here? Watch the 2-min tutorial
         </a>
 

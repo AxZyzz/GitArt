@@ -13,7 +13,8 @@ export default defineConfig({
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com",
         `connect-src 'self' https://api.github.com ${SUPABASE_HOST}`,
-        "img-src 'self' data:",
+        "img-src 'self' data: https://i.ytimg.com",
+        "frame-src https://www.youtube-nocookie.com",   // click-to-load tutorial video
         "object-src 'none'",
         "base-uri 'self'",
         "form-action 'self'",

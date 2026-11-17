@@ -5,8 +5,7 @@ import ConsentModal from './ConsentModal.jsx';
 import { subscribeEmail } from '../lib/supabase.js';
 
 import { YEARS } from '../lib/years.js';
-
-const TUTORIAL_URL = 'https://youtu.be/JpHKqhPetHo';
+import { TUTORIAL_URL } from './TutorialVideo.jsx';
 
 function parseGitHubUrl(url) {
   const m = url.match(/github\.com[/:]([^/]+)\/([^/.]+)/);

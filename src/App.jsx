@@ -7,6 +7,7 @@ import ScriptExporter from './components/ScriptExporter.jsx';
 import { emptyGrid } from './data/templates.js';
 import TextGenerator from './components/TextGenerator.jsx';
 import ProfilePreview from './components/ProfilePreview.jsx';
+import TutorialVideo from './components/TutorialVideo.jsx';
 import { YEARS } from './lib/years.js';
 import styles from './App.module.css';
 
@@ -38,6 +39,18 @@ export default function App() {
       <Hero onGetStarted={scrollToEditor} />
 
       <main className={styles.main}>
+        <section id="tutorial" className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.dim}>// </span>See it in 2 minutes
+            </h2>
+            <p className={styles.sectionSub}>
+              The whole flow, start to finish: draw, export, run.
+            </p>
+          </div>
+          <TutorialVideo />
+        </section>
+
         <section id="templates" className={styles.section}>
           <TemplateGallery onSelect={handleTemplateSelect} activeId={activeTemplateId} />
         </section>
