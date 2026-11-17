@@ -398,14 +398,332 @@ function generateChevrons() {
   return grid;
 }
 
+// ── More templates (batch 2) ─────────────────────────────────────
+// Stamp ASCII art onto an existing grid at a given column / row.
+function stamp(grid, rows, col0, row0 = 0) {
+  rows.forEach((line, dr) => {
+    [...line].forEach((ch, dc) => {
+      const v = Number(ch);
+      const r = row0 + dr;
+      const c = col0 + dc;
+      if (v >= 1 && v <= 4 && r >= 0 && r < ROWS && c >= 0 && c < COLS) grid[r][c] = v;
+    });
+  });
+  return grid;
+}
+
+// Deterministic pseudo-random so templates look the same on every load.
+function seeded(seed) {
+  let s = seed >>> 0;
+  return () => {
+    s = (s * 1664525 + 1013904223) >>> 0;
+    return s / 4294967296;
+  };
+}
+
+// Seasonal art sits in the weeks of the year it belongs to (col ≈ week).
+function generateChristmasTree() {
+  const grid = emptyGrid();
+  // light snowfall through early December
+  [[0, 38], [2, 40], [5, 39], [1, 42], [4, 43], [6, 41], [3, 37]].forEach(([r, c]) => { grid[r][c] = 1; });
+  return stamp(grid, [
+    '...4...',
+    '..222..',
+    '.24222.',
+    '..222..',
+    '.22242.',
+    '2422222',
+    '...1...',
+  ], 45);
+}
+
+function generatePumpkin() {
+  return stamp(emptyGrid(), [
+    '...1...',
+    '.44444.',
+    '4.444.4',
+    '4444444',
+    '4.4.4.4',
+    '44...44',
+    '.44444.',
+  ], 40);
+}
+
+function generateDiya() {
+  return stamp(emptyGrid(), [
+    '....4....',
+    '...444...',
+    '....3....',
+    '....1....',
+    '322222223',
+    '.2222222.',
+    '..22222..',
+  ], 40);
+}
+
+function generateGrowth() {
+  const grid = emptyGrid();
+  for (let c = 0; c < COLS; c++) grid[6][c] = 1; // soil
+  stamp(grid, ['.2.'], 3, 5);
+  stamp(grid, ['3.3', '.3.'], 13, 4);
+  stamp(grid, ['3...3', '.3.3.', '..3..', '..3..'], 22, 2);
+  stamp(grid, ['.444.', '44444', '.444.', '..2..', '..2..'], 33, 1);
+  stamp(grid, ['..444..', '.44444.', '4444444', '.44444.', '...2...', '...2...'], 44, 0);
+  return grid;
+}
+
+function generateMoonPhases() {
+  const grid = emptyGrid();
+  const mask = ['.xxx.', 'xxxxx', 'xxxxx', 'xxxxx', '.xxx.'];
+  // which columns (0–4) of the disc are lit: new moon → full → new moon
+  const lit = [
+    () => false,
+    x => x >= 4,
+    x => x >= 2,
+    x => x >= 1,
+    () => true,
+    x => x <= 3,
+    x => x <= 2,
+    x => x <= 0,
+  ];
+  lit.forEach((isLit, i) => {
+    const col0 = 3 + i * 6;
+    mask.forEach((line, dr) => {
+      [...line].forEach((ch, x) => {
+        if (ch === 'x') grid[1 + dr][col0 + x] = isLit(x) ? 4 : 1;
+      });
+    });
+  });
+  return grid;
+}
+
+function generateBrackets() {
+  const lt = ['...4', '..4.', '.4..', '4...', '.4..', '..4.', '...4'];
+  const sl = ['....4', '...4.', '...4.', '..4..', '.4...', '.4...', '4....'];
+  const gt = ['4...', '.4..', '..4.', '...4', '..4.', '.4..', '4...'];
+  return fromAscii(lt.map((row, r) => row + '..' + sl[r] + '..' + gt[r]));
+}
+
+function generateTerminal() {
+  return fromAscii([
+    '242424222222222222222',
+    '2...................2',
+    '2.4.................2',
+    '2..4................2',
+    '2.4..4444...........2',
+    '2...................2',
+    '222222222222222222222',
+  ]);
+}
+
+function generateGitBranch() {
+  const grid = emptyGrid();
+  // main line with commits
+  for (let c = 2; c <= 50; c++) grid[4][c] = 2;
+  for (let c = 2; c <= 50; c += 4) grid[4][c] = 4;
+  // feature branch: fork up, run, merge back down
+  [[3, 11], [2, 12], [1, 13], [1, 35], [2, 36], [3, 37]].forEach(([r, c]) => { grid[r][c] = 2; });
+  for (let c = 14; c <= 34; c++) grid[1][c] = 1;
+  for (let c = 15; c <= 34; c += 4) grid[1][c] = 3;
+  // short hotfix branch below
+  [[5, 41], [6, 42], [6, 43], [6, 44], [5, 45]].forEach(([r, c]) => { grid[r][c] = 1; });
+  grid[6][43] = 3;
+  return grid;
+}
+
+function generateStarfield() {
+  const grid = emptyGrid();
+  const rand = seeded(2026);
+  for (let i = 0; i < 80; i++) {
+    const r = Math.floor(rand() * ROWS);
+    const c = Math.floor(rand() * COLS);
+    const roll = rand();
+    grid[r][c] = roll < 0.5 ? 1 : roll < 0.8 ? 2 : 3;
+  }
+  // a few bright twinkles
+  [[2, 7], [4, 21], [1, 33], [4, 46]].forEach(([r, c]) => {
+    grid[r][c] = 4;
+    [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([dr, dc]) => { grid[r + dr][c + dc] = 2; });
+  });
+  return grid;
+}
+
+function generateDiamonds() {
+  const grid = emptyGrid();
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const d = Math.abs(r - 3) + Math.abs(((c + 4) % 8) - 4);
+      grid[r][c] = d === 3 ? 4 : d === 1 ? 2 : d === 0 ? 1 : 0;
+    }
+  }
+  return grid;
+}
+
+function generateEqualizer() {
+  const grid = emptyGrid();
+  for (let c = 1; c < COLS - 1; c++) {
+    const h = Math.max(1, Math.min(7, Math.round(3.6 + 3 * Math.sin(c * 0.7) * Math.cos(c * 0.23))));
+    for (let k = 0; k < h; k++) {
+      grid[ROWS - 1 - k][c] = k === h - 1 ? 4 : k >= 4 ? 3 : 2;
+    }
+  }
+  return grid;
+}
+
+function generatePawPrints() {
+  const grid = emptyGrid();
+  const paw = ['.4.4.', '4...4', '.444.', '.444.'];
+  for (let i = 0, c = 1; c + 5 <= COLS; i++, c += 7) stamp(grid, paw, c, i % 2 === 0 ? 0 : 3);
+  return grid;
+}
+
+function generateRobot() {
+  return fromAscii([
+    '....3....',
+    '.4444444.',
+    '.4.444.4.',
+    '344444443',
+    '.4422244.',
+    '.4444444.',
+    '...444...',
+  ]);
+}
+
 export const TEMPLATES = [
+  {
+    id: 'xmas',
+    name: 'Christmas Tree',
+    emoji: '🎄',
+    description: 'Lands in the last weeks of December, with snow on the way in.',
+    grid: generateChristmasTree(),
+    isNew: true,
+  },
+  {
+    id: 'pumpkin',
+    name: 'Pumpkin',
+    emoji: '🎃',
+    description: 'A jack-o-lantern sitting right on Halloween week.',
+    grid: generatePumpkin(),
+    isNew: true,
+  },
+  {
+    id: 'diya',
+    name: 'Diya',
+    emoji: '🪔',
+    description: 'A glowing lamp placed around Diwali, late Oct to mid Nov.',
+    grid: generateDiya(),
+    isNew: true,
+  },
+  {
+    id: 'growth',
+    name: 'Growth',
+    emoji: '🌱',
+    description: 'A seed in January, a full tree by December. Your year, visualised.',
+    grid: generateGrowth(),
+    isNew: true,
+  },
+  {
+    id: 'moon',
+    name: 'Moon Phases',
+    emoji: '🌙',
+    description: 'New moon to full and back again, across the year.',
+    grid: generateMoonPhases(),
+    isNew: true,
+  },
+  {
+    id: 'gitbranch',
+    name: 'Git Branch',
+    emoji: '🔀',
+    description: 'Main, a feature branch that merges back, and a quick hotfix.',
+    grid: generateGitBranch(),
+    isNew: true,
+  },
+  {
+    id: 'brackets',
+    name: '</>',
+    emoji: '💻',
+    description: 'The universal sign for "I write code".',
+    grid: generateBrackets(),
+    isNew: true,
+  },
+  {
+    id: 'terminal',
+    name: 'Terminal',
+    emoji: '⌨',
+    description: 'A terminal window with a prompt, waiting for your next command.',
+    grid: generateTerminal(),
+    isNew: true,
+  },
+  {
+    id: 'robot',
+    name: 'Robot',
+    emoji: '🤖',
+    description: 'A friendly bot with an antenna. Beep boop, ship code.',
+    grid: generateRobot(),
+    isNew: true,
+  },
+  {
+    id: 'paws',
+    name: 'Paw Prints',
+    emoji: '🐾',
+    description: 'Something walked across your keyboard all year.',
+    grid: generatePawPrints(),
+    isNew: true,
+  },
+  {
+    id: 'starfield',
+    name: 'Starfield',
+    emoji: '✨',
+    description: 'A scattered night sky with a few bright twinkles.',
+    grid: generateStarfield(),
+    isNew: true,
+  },
+  {
+    id: 'equalizer',
+    name: 'Equalizer',
+    emoji: '🎚',
+    description: 'Audio bars bouncing across the year. Coding playlist on.',
+    grid: generateEqualizer(),
+    isNew: true,
+  },
+  {
+    id: 'diamonds',
+    name: 'Diamonds',
+    emoji: '💠',
+    description: 'A repeating diamond lattice that fills the whole graph.',
+    grid: generateDiamonds(),
+    isNew: true,
+  },
+  {
+    id: 'hireme',
+    name: 'HIRE ME',
+    emoji: '💼',
+    description: 'Say it loud on the one page every recruiter checks.',
+    grid: generateFromText('HIRE ME'),
+    isNew: true,
+  },
+  {
+    id: 'lgtm',
+    name: 'LGTM',
+    emoji: '✅',
+    description: 'Looks good to me. Approved, for the whole year.',
+    grid: generateFromText('LGTM'),
+    isNew: true,
+  },
+  {
+    id: '404',
+    name: '404',
+    emoji: '🔍',
+    description: 'Contributions not found. Ironically, made of contributions.',
+    grid: generateFromText('404'),
+    isNew: true,
+  },
   {
     id: 'bee',
     name: 'Busy Bee',
     emoji: '🐝',
     description: 'Striped and buzzing. Made for the yellow graph.',
     grid: generateBee(),
-    isNew: true,
   },
   {
     id: 'sunrise',
@@ -413,7 +731,6 @@ export const TEMPLATES = [
     emoji: '🌅',
     description: 'A sun cresting the horizon across your year.',
     grid: generateSunrise(),
-    isNew: true,
   },
   {
     id: 'skyline',
@@ -421,7 +738,6 @@ export const TEMPLATES = [
     emoji: '🏙',
     description: 'City blocks with lit windows. Night-shift commits.',
     grid: generateSkyline(),
-    isNew: true,
   },
   {
     id: 'lightning',
@@ -429,7 +745,6 @@ export const TEMPLATES = [
     emoji: '⚡',
     description: 'One bold bolt. For your fastest shipping streak.',
     grid: generateLightning(),
-    isNew: true,
   },
   {
     id: 'shipit',
@@ -437,7 +752,6 @@ export const TEMPLATES = [
     emoji: '📦',
     description: 'The only commit message that matters.',
     grid: generateFromText('SHIP IT!'),
-    isNew: true,
   },
   {
     id: 'smiley',
@@ -445,7 +759,6 @@ export const TEMPLATES = [
     emoji: '🙂',
     description: 'A friendly face for anyone visiting your profile.',
     grid: generateSmiley(),
-    isNew: true,
   },
   {
     id: 'cat',
@@ -453,7 +766,6 @@ export const TEMPLATES = [
     emoji: '🐱',
     description: 'Pointy ears, whiskers, zero bugs (allegedly).',
     grid: generateCat(),
-    isNew: true,
   },
   {
     id: 'coffee',
@@ -461,7 +773,6 @@ export const TEMPLATES = [
     emoji: '☕',
     description: 'Steaming mug. Fuel for every green — or yellow — square.',
     grid: generateCoffee(),
-    isNew: true,
   },
   {
     id: 'chevrons',
@@ -469,7 +780,6 @@ export const TEMPLATES = [
     emoji: '»',
     description: 'Forward-pointing arrows with a soft fade. Always moving.',
     grid: generateChevrons(),
-    isNew: true,
   },
   {
     id: 'heart',
