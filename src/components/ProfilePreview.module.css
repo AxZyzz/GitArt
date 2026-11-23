@@ -40,12 +40,14 @@
 }
 
 .yearSelect {
-  padding: 4px 28px 4px 9px;
+  min-width: 82px;
+  padding: 4px 9px;
   font-size: 0.72rem;
   color: var(--text-muted);
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 6px;
+  text-align: center;
 }
 
 .yearSelect:hover {
