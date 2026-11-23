@@ -33,19 +33,14 @@ export default function ProfilePreview({ grid, year, years, onYearChange }) {
           <span className={styles.avatar} aria-hidden="true" />
           <span className={styles.handle}>@you</span>
         </div>
-        <div className={styles.years} role="tablist" aria-label="Preview year">
-          {years.map(y => (
-            <button
-              key={y}
-              role="tab"
-              aria-selected={y === year}
-              className={`${styles.yearBtn} ${y === year ? styles.yearActive : ''}`}
-              onClick={() => onYearChange(y)}
-            >
-              {y}
-            </button>
-          ))}
-        </div>
+        <select
+          className={styles.yearSelect}
+          aria-label="Preview year"
+          value={year}
+          onChange={event => onYearChange(Number(event.target.value))}
+        >
+          {years.map(y => <option key={y} value={y}>{y}</option>)}
+        </select>
       </div>
 
       <div className={styles.count}>

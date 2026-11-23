@@ -52,13 +52,9 @@
   letter-spacing: 0;
 }
 
-.yearTabs {
-  display: flex;
-  gap: 4px;
-}
-
-.yearTab {
-  padding: 6px 14px;
+.yearSelect {
+  min-width: 120px;
+  padding: 8px 34px 8px 12px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -67,15 +63,15 @@
   transition: all 0.1s;
 }
 
-.yearTab:hover {
+.yearSelect:hover {
   border-color: var(--lvl-3);
   color: var(--text-primary);
 }
 
-.yearTab.active {
-  background: var(--lvl-1);
+.yearSelect:focus {
+  outline: none;
   border-color: var(--lvl-4);
-  color: var(--lvl-4);
+  box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
 .input {
