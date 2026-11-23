@@ -119,18 +119,17 @@ export default function ScriptExporter({ grid, year, onYearChange }) {
 
       <div className={styles.config}>
         <div className={styles.field}>
-          <label className={styles.label}><span className={styles.stepNum}>1</span>Year</label>
-          <div className={styles.yearTabs}>
-            {YEARS.map(y => (
-              <button
-                key={y}
-                className={`${styles.yearTab} ${year === y ? styles.active : ''}`}
-                onClick={() => onYearChange(y)}
-              >
-                {y}
-              </button>
-            ))}
-          </div>
+          <label className={styles.label} htmlFor="export-year">
+            <span className={styles.stepNum}>1</span>Year
+          </label>
+          <select
+            id="export-year"
+            className={styles.yearSelect}
+            value={year}
+            onChange={event => onYearChange(Number(event.target.value))}
+          >
+            {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
         </div>
 
         <div className={styles.field} style={{ flex: 1 }}>

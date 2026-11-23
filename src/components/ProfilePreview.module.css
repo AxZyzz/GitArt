@@ -39,29 +39,26 @@
   color: var(--text-primary);
 }
 
-.years {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-
-.yearBtn {
-  padding: 3px 9px;
+.yearSelect {
+  min-width: 82px;
+  padding: 4px 9px;
   font-size: 0.72rem;
   color: var(--text-muted);
-  background: transparent;
-  border: 1px solid transparent;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
   border-radius: 6px;
+  text-align: center;
 }
 
-.yearBtn:hover {
+.yearSelect:hover {
   color: var(--text-primary);
+  border-color: var(--lvl-3);
 }
 
-.yearActive {
-  color: var(--lvl-4);
-  border-color: var(--lvl-3);
-  background: rgb(var(--accent-rgb) / 0.08);
+.yearSelect:focus {
+  outline: none;
+  border-color: var(--lvl-4);
+  box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
 .count {
